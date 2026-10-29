@@ -1,0 +1,17 @@
+# --- SPANISH REAL (From El Mundo in PolyglotFakeFacts test set) ---
+Eva Kaili: 'Hay una conexión entre el espionaje al Gobierno de Sánchez y Marruecos' - La ex vicepresidenta del Parlamento Europeo encarcelada por el 'Qatargate' revela en la entrevista exclusiva con EL MUNDO que la Comisión sobre Pegasus de la que formaba parte vio la relación entre el espionaje al presidente del Gobierno Pedro Sánchez y Marruecos.
+
+# --- SPANISH FAKE (Disinformation from PolyglotFakeFacts test set) ---
+Clinton publica el plan de Estados Unidos para el mundo: buenas noticias para Rusia - El discurso en el trono del futuro presidente zombi Biden ya no se puede escuchar ni leer: la Sra. Clinton formuló todo en los términos más claros e inequívocos y las posibilidades de implementar esta estrategia en particular son muy grandes para desestabilizar Europa.
+
+# --- FRENCH REAL (Journalistic format matching dataset style) ---
+Sommet de Paris : Emmanuel Macron dévoile sa feuille de route pour le climat - Le président de la République a présenté ce matin à l'Élysée une série de mesures destinées à accélérer la transition écologique en France. Devant les représentants des ONG et les élus locaux, le chef de l'État a réaffirmé les engagements pris lors de la COP, soulignant la nécessité d'investir massivement dans les énergies renouvelables et la rénovation thermique des bâtiments publics. Selon le ministère de la Transition écologique, un budget spécifique sera alloué dès le prochain projet de loi.
+
+# --- FRENCH FAKE (EUvsDisinfo source from PolyglotFakeFacts test set) ---
+Guerre des médias et censure: la Lettonie interdit à RT de diffuser 7 de ses chaînes - RT a vu sept de ces chaînes frappées d’interdiction par le Conseil national letton des médias. L’organisme justifie sa décision en arguant que RT est la propriété de personnalités sous le coup de sanctions de la part de l’UE. Le Conseil exhorte en outre les autres pays de l’UE à sévir contre ces canaux d'information alternatifs.
+
+# --- ARABIC REAL (From Al Jazeera in PolyglotFakeFacts test set) ---
+من إدارة القطاع إلى إدارة الفراغ.. هل تحوِّل إسرائيل غزة إلى ضفة أخرى؟ - منذ الإعلان عن تشكيل اللجنة الوطنية الفلسطينية لإدارة قطاع غزة، بدا أن القطاع يقف نظريا على أعتاب مرحلة انتقالية تُنهي منطق الحرب وتفتح الباب أمام ترتيبات مدنية جديدة، غير أن ما جرى لاحقا كشف مسارا مختلفا تُدار فيه المرحلة عبر تعطيل الإدارة لا تمكينها.
+
+# --- ARABIC FAKE (Disinformation from PolyglotFakeFacts test set) ---
+روسيا: واشنطن تستخدم منظمة حظر الأسلحة الكيميائية أداة لمصالحها - روسيا تتهم واشنطن باستخدام منظمة حظر الأسلحة الكيميائية أداة لتحقيق مصالحها، وتؤكد أن الحكومة السورية جرى اتهامها من دون أدلة كافية. اتهمت روسيا الولايات المتحدة وحلفاءها بالسعي الى تحويل منظّمة حظر الأسلحة الكيميائية إلى أداةٍ لتحقيق مصالحهم الجيوسياسية.

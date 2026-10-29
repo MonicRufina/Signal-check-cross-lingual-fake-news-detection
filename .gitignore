@@ -1,0 +1,42 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Large Model Weights (>100MB exceeds GitHub hard limit)
+# Note: Host model.safetensors on Hugging Face Hub, Google Drive, or GitHub Releases
+models/**/*.safetensors
+models/**/*.bin
+models/**/*.pt
+models/**/*.pth
+
+# Datasets (large raw archives)
+data/processed/
+data/raw/train.all.tsv
+data/raw/merged_fakenews.csv
+data/raw/*.xlsx
+
+# Keep sample data for testing
+!data/raw/sample_multilingual_fakenews.csv
+
+# IDE & OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Output checkpoints during training
+checkpoint-*/
+outputs/*.png
+outputs/*.csv

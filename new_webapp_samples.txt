@@ -1,0 +1,47 @@
+============================================================
+NEW UNSEEN SAMPLES FOR TESTING THE WEB APP
+============================================================
+
+--- 1. ENGLISH ---
+
+[REAL]
+European Central Bank maintains key interest rates amid stabilizing inflation - The governing council of the European Central Bank decided today to keep its benchmark refinancing rates unchanged following its monetary policy meeting in Frankfurt. President Christine Lagarde noted during the press conference that while headline consumer price inflation has moderated toward the two percent target, underlying services inflation remains persistent, requiring a data-dependent and restrictive stance for the foreseeable future.
+
+[FAKE]
+Secret UN treaty leaked: Global ban on private homeownership planned by 2030 - Unredacted internal documents from an undisclosed summit in Geneva allegedly reveal that world leaders have secretly agreed to phase out individual property rights in favor of centralized state housing leases. Independent investigators claim this confidential agreement will be gradually enforced under the guise of sustainable development goals without public referendum.
+
+
+--- 2. FRENCH ---
+
+[REAL]
+L'Union européenne adopte de nouvelles règles pour encadrer l'intelligence artificielle - Après de longs mois de négociations à Bruxelles, le Parlement européen et les États membres sont parvenus à un accord historique pour réguler les systèmes d'intelligence artificielle générative. Le texte législatif impose des obligations strictes de transparence aux développeurs de modèles à haut risque, tout en garantissant la protection des données personnelles et les droits fondamentaux des citoyens européens.
+
+[FAKE]
+Révélation choc : Le gouvernement français prépare la fermeture définitive des centrales nucléaires d'ici l'hiver prochain - Un rapport confidentiel émanant d'un groupe d'experts indépendants affirme que l'ensemble du parc nucléaire national sera mis à l'arrêt forcé avant novembre pour des raisons de sécurité dissimulées au grand public. Les autorités prévoiraient d'imposer un rationnement strict de l'électricité à tous les foyers sans consultation préalable.
+
+
+--- 3. SPANISH ---
+
+[REAL]
+El gobierno español aprueba un plan estratégico de inversión en energías renovables y baterías - El Consejo de Ministros ha dado luz verde este martes a una partida de fondos comunitarios destinada a fortalecer la cadena de suministro industrial de hidrógeno verde y almacenamiento energético en España. La ministra para la Transición Ecológica destacó que esta medida reducirá la dependencia energética del país y creará miles de empleos técnicos en zonas rurales durante los próximos cinco años.
+
+[FAKE]
+Documentos clasificados demuestran que las vacunas infantiles contienen nanosensores de seguimiento biométrico - Un grupo clandestino de médicos disidentes ha difundido un comunicado advirtiendo que los lotes recientes de vacunas pediátricas distribuidos en Europa contienen componentes metálicos diseñados para registrar datos biológicos de los menores sin el consentimiento de sus familias, en complicidad con las agencias sanitarias internacionales.
+
+
+--- 4. GERMAN ---
+
+[REAL]
+Bundesnetzagentur meldet stabilen Ausbau der Solarenergie im ersten Halbjahr - Die Bundesnetzagentur hat am Donnerstag neue Zahlen zum Ausbau der erneuerbaren Energien in Deutschland vorgelegt. Demnach wurden in den ersten sechs Monaten des Jahres deutlich mehr Photovoltaikanlagen auf Wohngebäuden und Freiflächen installiert als im Vorjahreszeitraum. Der Verband der Energie- und Wasserwirtschaft begrüßte die Entwicklung als wichtigen Meilenstein zur Erreichung der Klimaziele für 2030.
+
+[FAKE]
+Geheimes EU-Protokoll enthüllt: Bargeldverbot und digitale Ausweispflicht für alle Einkäufe ab Herbst beschlossen - Wie aus durchgestochenen Notizen eines Sondertreffens der europäischen Finanzminister hervorgeht, soll die Verwendung von Bargeld im gesamten Euroraum schrittweise vollständig untersagt werden. Bürger sollen demnach gezwungen werden, jede Transaktion über ein staatlich überwachtes digitales Identitätskonto abzuwickeln.
+
+
+--- 5. ARABIC ---
+
+[REAL]
+منظمة الصحة العالمية تعلن عن إطلاق استراتيجية عالمية جديدة لمكافحة الأمراض المعدية - أعلنت منظمة الصحة العالمية خلال مؤتمر صحفي في جنيف عن خطة عمل شاملة تهدف إلى تعزيز أنظمة الرعاية الصحية الأولية في الدول النامية والتصدي لانتشار الأوبئة الموسمية. وأكد المدير العام للمنظمة أن الاستراتيجية تركز على تحسين سلاسل توريد الأدوية الأساسية وتدريب الكوادر الطبية المحلية لضمان الاستجابة السريعة للطوارئ الصحية.
+
+[FAKE]
+وثيقة مسربة تكشف خطة سرية لقطع شبكة الإنترنت العالمية والتعتيم على اتصالات الأقمار الصناعية - نشرت منصات غير رسمية تقريراً يزعم أن وكالات استخباراتية دولية اتفقت على تعطيل كابلات الإنترنت البحرية الرئيسية بحلول نهاية الشهر الحالي لفرض رقابة عسكرية شاملة ومنع تداول المعلومات المستقلة بين المواطنين حول الأزمات الاقتصادية العالمية.

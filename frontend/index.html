@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signal Check | Cross-Lingual Fake News Detection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=15">
+</head>
+<body>
+  <main class="shell">
+    <!-- Top Header -->
+    <header class="header-container">
+      <div class="topbar">
+        <div class="brand-section">
+          <a class="brand" href="#" id="brand-link" aria-label="Signal Check home">
+            <span class="brand-mark">SC</span>
+            <div class="brand-info">
+              <span class="brand-name">Signal Check</span>
+              <span class="brand-tagline">Cross-Lingual Disinformation Desk</span>
+            </div>
+          </a>
+          <div class="status" id="status" aria-live="polite">
+            <span class="status-dot"></span> Checking model
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <!-- Global Language Selector -->
+          <div class="lang-select-wrapper">
+            <select class="lang-select" id="global-lang-select" title="Choose language">
+              <option value="en">🇬🇧 English</option>
+              <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+              <option value="ta">🇮🇳 தமிழ் (Tamil)</option>
+              <option value="fr">🇫🇷 Français (French)</option>
+              <option value="es">🇪🇸 Español (Spanish)</option>
+              <option value="de">🇩🇪 Deutsch (German)</option>
+              <option value="ar">🇸🇦 العربية (Arabic)</option>
+              <option value="ru">🇷🇺 Русский (Russian)</option>
+              <option value="pt">🇵🇹 Português (Portuguese)</option>
+              <option value="id">🇮🇩 Bahasa Indonesia</option>
+            </select>
+          </div>
+
+          <!-- Dark / Light Mode Toggle -->
+          <button class="icon-btn" id="theme-toggle" type="button" title="Toggle dark/light theme" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+          </button>
+
+          <!-- Authentication Button / User Profile Pill -->
+          <button class="btn-auth-nav" id="topbar-login-btn" type="button">
+            <span>🔐</span> Sign In
+          </button>
+
+          <div class="user-profile-badge" id="topbar-profile-badge" style="display: none;">
+            <div class="user-avatar" id="topbar-user-avatar">AR</div>
+            <div class="user-info-text">
+              <span class="user-name" id="topbar-user-name">Dr. Alex Reed</span>
+              <span class="user-role" id="topbar-user-role">OSINT Analyst</span>
+            </div>
+            <button class="btn-signout" id="topbar-signout-btn" type="button" title="Sign Out">✕</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs" aria-label="Main Navigation">
+        <button class="nav-tab active" data-tab="detect" type="button">
+          <span>🔍</span> Detect News
+        </button>
+        <button class="nav-tab" data-tab="factcheck" type="button">
+          <span>📋</span> Fact-Check Search
+        </button>
+        <button class="nav-tab" data-tab="analytics" type="button">
+          <span>📊</span> Analytics / Dashboard
+        </button>
+        <button class="nav-tab" data-tab="history" type="button">
+          <span>🕒</span> History <span class="tab-badge" id="history-badge">0</span>
+        </button>
+        <button class="nav-tab" data-tab="insights" type="button">
+          <span>🧠</span> Model Insights
+        </button>
+        <button class="nav-tab" data-tab="pipeline" type="button">
+          <span>⚙️</span> How It Works
+        </button>
+        <button class="nav-tab" data-tab="whatsapp" type="button">
+          <span>📱</span> WhatsApp Bot
+        </button>
+        <button class="nav-tab" data-tab="about" type="button">
+          <span>📖</span> About / Research
+        </button>
+        <button class="nav-tab" data-tab="login" id="nav-tab-login" type="button">
+          <span>🔐</span> <span id="nav-login-label">Sign In</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- ==================== TAB 1: DETECT NEWS ==================== -->
+    <section class="tab-view active" id="view-detect">
+      <div class="hero">
+        <h1>Read the signal<br><em>behind the headline.</em></h1>
+        <p class="intro">Multilingual cross-lingual verification and zero-shot detection across 100+ languages.</p>
+      </div>
+
+      <div class="workspace">
+        <!-- Input Panel -->
+        <div class="panel input-panel">
+          <div class="panel-heading">
+            <h2>News claim or article</h2>
+            <span class="language-badge" id="active-lang-badge">English (🇬🇧)</span>
+          </div>
+
+          <!-- URL Importer for Live News Scraping -->
+          <div class="url-import-container">
+            <div class="url-import-input-wrap">
+              <span class="url-icon" aria-hidden="true">🔗</span>
+              <input type="url" id="import-url-input" placeholder="Paste live article URL to extract & verify (e.g. BBC, Reuters, Le Monde)..." spellcheck="false">
+              <button class="btn-import-url" id="import-url-btn" type="button">
+                <span>Fetch Article</span>
+              </button>
+            </div>
+            <div class="url-import-status" id="url-import-status" hidden></div>
+          </div>
+
+          <label class="sr-only" for="news-text">News claim to analyze</label>
+          <textarea id="news-text" maxlength="5000" placeholder="Paste a headline, statement, or complete news article here..."></textarea>
+
+          <div class="input-footer">
+            <span id="char-count">0 / 5,000</span>
+            <div class="button-group">
+              <button class="btn-secondary" id="clear-btn" type="button">Clear</button>
+              <button class="analyze-button" id="analyze-button" type="button">
+                Analyze claim <span aria-hidden="true">-&gt;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Panel -->
+        <div class="panel result-panel" id="result-panel">
+          <div class="panel-heading">
+            <h2>Model reading</h2>
+            <span class="result-index" id="result-meta">Awaiting input</span>
+          </div>
+
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon-shield">
+              <span>📡</span>
+            </div>
+            <h3>Awaiting Claim Input</h3>
+            <p>Paste a statement or import an article URL to examine linguistic cues, word saliency, and live news corroboration.</p>
+          </div>
+
+          <div class="result-content" id="result-content" hidden>
+            <!-- Integrated Verdict Banner -->
+            <div class="verdict-banner real" id="verdict-banner">
+              <div class="verdict-banner-main">
+                <div class="verdict-badge-wrap">
+                  <span class="verdict-icon" id="verdict-icon">✓</span>
+                  <span class="verdict-label" id="verdict-label">REAL</span>
+                </div>
+                <div class="verdict-detail-wrap">
+                  <span class="verdict-title" id="verdict-title">Factual & Authentic Claim</span>
+                  <span class="verdict-desc" id="verdict-desc">Language syntax and attribution align with verified journalism</span>
+                </div>
+              </div>
+              <div class="verdict-confidence-badge" id="confidence-badge">
+                <span class="confidence-label">Confidence</span>
+                <span class="confidence-text" id="confidence">0%</span>
+              </div>
+            </div>
+
+            <div class="probabilities">
+              <div class="prob-box real-box">
+                <div class="prob-box-header">
+                  <span>Factual / Authentic</span>
+                  <span class="prob-tag">Real</span>
+                </div>
+                <strong id="real-score">0%</strong>
+              </div>
+              <div class="prob-box fake-box">
+                <div class="prob-box-header">
+                  <span>Deceptive / Rumor</span>
+                  <span class="prob-tag">Fake</span>
+                </div>
+                <strong id="fake-score">0%</strong>
+              </div>
+            </div>
+
+            <!-- NLP Stylometric & Linguistic Deception Cues Card -->
+            <div class="nlp-linguistics-card" id="nlp-linguistics-card">
+              <div class="nlp-card-header">
+                <div class="nlp-title-wrap">
+                  <span class="nlp-icon" aria-hidden="true">🔬</span>
+                  <div>
+                    <h4>Linguistic Stylometry &amp; Pragmatic Cues</h4>
+                    <p class="nlp-subtitle">Computational feature extraction: objectivity, affect, clickbait syntax &amp; readability</p>
+                  </div>
+                </div>
+                <span class="nlp-badge">NLP Diagnostics</span>
+              </div>
+
+              <div class="nlp-metrics-grid">
+                <!-- Metric 1: Objectivity vs Subjectivity -->
+                <div class="nlp-metric-box" id="nlp-box-objectivity">
+                  <div class="nlp-metric-top">
+                    <span class="nlp-metric-title">Objectivity Ratio</span>
+                    <span class="nlp-metric-value" id="nlp-obj-val">0%</span>
+                  </div>
+                  <div class="nlp-track">
+                    <div class="nlp-bar" id="nlp-obj-bar" style="width: 0%;"></div>
+                  </div>
+                  <span class="nlp-metric-desc" id="nlp-obj-desc">Attribution vs. opinion density</span>
+                </div>
+
+                <!-- Metric 2: Sensationalism & Clickbait Index -->
+                <div class="nlp-metric-box" id="nlp-box-sensationalism">
+                  <div class="nlp-metric-top">
+                    <span class="nlp-metric-title">Clickbait / Urgency Index</span>
+                    <span class="nlp-metric-value" id="nlp-sens-val">0%</span>
+                  </div>
+                  <div class="nlp-track">
+                    <div class="nlp-bar" id="nlp-sens-bar" style="width: 0%;"></div>
+                  </div>
+                  <span class="nlp-metric-desc" id="nlp-sens-desc">Exclamation &amp; urgency hooks</span>
+                </div>
+
+                <!-- Metric 3: Affective Tone / Emotional Extremity -->
+                <div class="nlp-metric-box" id="nlp-box-emotion">
+                  <div class="nlp-metric-top">
+                    <span class="nlp-metric-title">Emotional Polarization</span>
+                    <span class="nlp-metric-value" id="nlp-emo-val">0%</span>
+                  </div>
+                  <div class="nlp-track">
+                    <div class="nlp-bar" id="nlp-emo-bar" style="width: 0%;"></div>
+                  </div>
+                  <span class="nlp-metric-desc" id="nlp-emo-desc">Affective valence vs. neutral tone</span>
+                </div>
+
+                <!-- Metric 4: Lexical Richness (Type-Token Ratio) -->
+                <div class="nlp-metric-box" id="nlp-box-lexical">
+                  <div class="nlp-metric-top">
+                    <span class="nlp-metric-title">Lexical Diversity (TTR)</span>
+                    <span class="nlp-metric-value" id="nlp-lex-val">0.00</span>
+                  </div>
+                  <div class="nlp-track">
+                    <div class="nlp-bar" id="nlp-lex-bar" style="width: 0%;"></div>
+                  </div>
+                  <span class="nlp-metric-desc" id="nlp-lex-desc">Vocabulary richness &amp; reading level</span>
+                </div>
+              </div>
+
+              <!-- Linguistic Diagnostic Evidence Markers -->
+              <div class="nlp-markers-wrap" id="nlp-markers-wrap">
+                <span class="nlp-markers-label">Linguistic Cues:</span>
+                <div class="nlp-markers-list" id="nlp-markers-list">
+                  <!-- Dynamically populated tags -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Model Insights / Word Attribution Saliency Heatmap -->
+            <div class="saliency-section" id="saliency-container">
+              <div class="saliency-header">
+                <h4>Token Saliency & Word Importance (SHAP-style)</h4>
+                <div class="saliency-legend">
+                  <span>Low</span>
+                  <span class="legend-swatch" style="background: rgba(5,150,105,0.18)"></span>
+                  <span class="legend-swatch" style="background: rgba(5,150,105,0.55)"></span>
+                  <span class="legend-swatch" style="background: rgba(5,150,105,0.95)"></span>
+                  <span>High Impact</span>
+                </div>
+              </div>
+              <div class="saliency-words" id="saliency-words">
+                <!-- Dynamically generated word badges -->
+              </div>
+            </div>
+
+            <!-- Corroborating Live News Sources (Web Scraped Authentic Coverage) -->
+            <div class="source-articles-section" id="source-articles-container" hidden>
+              <div class="sources-header">
+                <div class="sources-title-wrap">
+                  <span class="sources-icon" aria-hidden="true">🌐</span>
+                  <div>
+                    <h4>Authentic Corroborating Articles</h4>
+                    <p class="sources-subtitle">Live web-scraped coverage from verified news publishers</p>
+                  </div>
+                </div>
+                <span class="sources-count-badge" id="sources-count-badge">0 sources</span>
+              </div>
+              <div class="source-articles-list" id="source-articles-list">
+                <!-- Dynamically injected real source articles -->
+              </div>
+            </div>
+
+            <div class="result-actions">
+              <button class="btn-secondary" id="copy-result-btn" type="button">📋 Copy Verdict</button>
+              <button class="btn-secondary" id="search-sources-btn" type="button">🌐 Find Live Coverage</button>
+            </div>
+          </div>
+
+          <div class="error-state" id="error-state" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: FACT-CHECK SEARCH ==================== -->
+    <section class="tab-view" id="view-factcheck">
+      <div class="hero">
+        <p class="eyebrow">Database Search</p>
+        <h1>Verified Fact-Checks</h1>
+        <p class="intro">Search across thousands of verified claims from the PolyglotFakeFacts and X-FACT benchmark datasets vetted by credible international organizations.</p>
+      </div>
+
+      <div class="search-controls">
+        <input class="search-input" id="fc-search-input" type="text" placeholder="Search claims by keyword, organization, or topic (e.g., vaccine, election, WHO, sanctions)...">
+        <select class="lang-select" id="fc-lang-filter">
+          <option value="all">All Languages</option>
+          <option value="en">English (en)</option>
+          <option value="fr">French (fr)</option>
+          <option value="es">Spanish (es)</option>
+          <option value="de">German (de)</option>
+          <option value="ar">Arabic (ar)</option>
+          <option value="hi">Hindi (hi)</option>
+          <option value="ta">Tamil (ta)</option>
+          <option value="pt">Portuguese (pt)</option>
+          <option value="id">Indonesian (id)</option>
+          <option value="cs">Czech (cs)</option>
+        </select>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Verdict</th>
+              <th>Claim</th>
+              <th>Claimant / Source</th>
+              <th>Fact-Checker</th>
+              <th>Language</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="factcheck-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: ANALYTICS / DASHBOARD ==================== -->
+    <section class="tab-view" id="view-analytics">
+      <div class="hero">
+        <p class="eyebrow">Intelligence Overview</p>
+        <h1>Analytics & Dashboard</h1>
+        <p class="intro">Monitoring cross-lingual fake news detection trends, confidence distributions, and emerging narrative clusters.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-title">Claims Analyzed</p>
+          <p class="stat-value" id="stat-total">12,850</p>
+          <p class="stat-sub">Across 18 benchmark splits</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-title">Overall Accuracy</p>
+          <p class="stat-value" style="color: var(--green);">92.4%</p>
+          <p class="stat-sub">Macro-F1: 91.8%</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-title">Average Confidence</p>
+          <p class="stat-value" id="stat-conf">94.2%</p>
+          <p class="stat-sub">Calibrated Softmax</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-title">Languages Covered</p>
+          <p class="stat-value" style="color: var(--blue);">100+</p>
+          <p class="stat-sub">XLM-RoBERTa encoder</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dash-panel">
+          <h3>Top Verified Languages by Sample Count</h3>
+          <div class="bar-chart" id="lang-bar-chart">
+            <!-- Dynamically rendered bars -->
+          </div>
+        </div>
+
+        <div class="dash-panel">
+          <h3>Trending Disinformation Themes</h3>
+          <div class="trend-list" id="trend-list">
+            <!-- Dynamically rendered categories -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: HISTORY ==================== -->
+    <section class="tab-view" id="view-history">
+      <div class="hero">
+        <p class="eyebrow">Audit Trail</p>
+        <h1>History of Past Checks</h1>
+        <p class="intro">Review your past verifications, inspect confidence distributions, or reload previous claims into the detector with one click.</p>
+      </div>
+
+      <div class="search-controls" style="justify-content: space-between;">
+        <input class="search-input" id="history-search-input" type="text" placeholder="Search your past checks...">
+        <div class="button-group">
+          <button class="btn-secondary" id="export-history-btn" type="button">📥 Export JSON</button>
+          <button class="btn-secondary" id="clear-history-btn" type="button">🗑️ Clear History</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Verdict</th>
+              <th>Confidence</th>
+              <th>Language</th>
+              <th>Text Snippet</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 5: MODEL INSIGHTS ==================== -->
+    <section class="tab-view" id="view-insights">
+      <div class="hero">
+        <p class="eyebrow">Interpretability & Performance</p>
+        <h1>Model Insights & Benchmarks</h1>
+        <p class="intro">In-depth performance evaluation across 18 PolyglotFakeFacts languages and zero-shot transfer benchmarks.</p>
+      </div>
+
+      <!-- Confusion Matrix Card -->
+      <div class="dashboard-grid" style="margin-bottom: 28px;">
+        <div class="dash-panel">
+          <h3>Confusion Matrix (Held-out Test Split)</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px;">
+            <div style="padding: 16px; background: var(--green-light); border: 1px solid var(--green); border-radius: 4px;">
+              <span style="font: 500 11px 'DM Mono', monospace; color: var(--green);">TRUE REAL</span>
+              <p style="margin: 6px 0 0; font-size: 24px; font-weight: 700; color: var(--green);">6,050 <span style="font-size: 13px; font-weight: 400;">(93.6%)</span></p>
+            </div>
+            <div style="padding: 16px; background: var(--coral-light); border: 1px solid var(--coral); border-radius: 4px;">
+              <span style="font: 500 11px 'DM Mono', monospace; color: var(--coral);">FALSE FAKE (Type I)</span>
+              <p style="margin: 6px 0 0; font-size: 24px; font-weight: 700; color: var(--coral);">412 <span style="font-size: 13px; font-weight: 400;">(6.4%)</span></p>
+            </div>
+            <div style="padding: 16px; background: var(--coral-light); border: 1px solid var(--coral); border-radius: 4px;">
+              <span style="font: 500 11px 'DM Mono', monospace; color: var(--coral);">FALSE REAL (Type II)</span>
+              <p style="margin: 6px 0 0; font-size: 24px; font-weight: 700; color: var(--coral);">564 <span style="font-size: 13px; font-weight: 400;">(8.8%)</span></p>
+            </div>
+            <div style="padding: 16px; background: var(--green-light); border: 1px solid var(--green); border-radius: 4px;">
+              <span style="font: 500 11px 'DM Mono', monospace; color: var(--green);">TRUE FAKE</span>
+              <p style="margin: 6px 0 0; font-size: 24px; font-weight: 700; color: var(--green);">5,824 <span style="font-size: 13px; font-weight: 400;">(91.2%)</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-panel">
+          <h3>SHAP & Gradient Saliency Methodology</h3>
+          <p style="font-size: 14px; line-height: 1.6; color: var(--muted); margin: 0 0 12px;">
+            The model interpretability engine computes input embedding gradients with respect to the output logit for the predicted class:
+          </p>
+          <div style="padding: 12px; background: var(--paper); border: 1px solid var(--line); font: 12px 'DM Mono', monospace; border-radius: 4px; margin-bottom: 12px;">
+            Attribution(w_i) = || ∇_Embed(w_i) ⊙ Embed(w_i) ||_2
+          </div>
+          <p style="font-size: 13px; line-height: 1.5; color: var(--muted); margin: 0;">
+            This highlights which subwords contributed most heavily to the classification verdict, distinguishing sensational rhetoric from factual news phrasing.
+          </p>
+        </div>
+      </div>
+
+      <!-- Language Benchmark Table -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Language</th>
+              <th>Code</th>
+              <th>Accuracy</th>
+              <th>Macro-F1</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>Test Support</th>
+            </tr>
+          </thead>
+          <tbody id="metrics-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 6: HOW IT WORKS ==================== -->
+    <section class="tab-view" id="view-pipeline">
+      <div class="hero">
+        <p class="eyebrow">Architecture & Pipeline</p>
+        <h1>How the Hybrid Model Works</h1>
+        <p class="intro">A deep dive into why combining multilingual transformer encoders with recurrent sequence layers and masked mean pooling enables robust cross-lingual detection.</p>
+      </div>
+
+      <div class="pipeline-steps">
+        <div class="step-card">
+          <span class="step-number">Step 01</span>
+          <h3>Multilingual Tokenization</h3>
+          <p>SentencePiece tokenization with a 250,000 subword vocabulary enables seamless representation of Latin, Cyrillic, Devanagari, Arabic, and Tamil scripts without out-of-vocabulary loss.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">Step 02</span>
+          <h3>XLM-RoBERTa Transformer</h3>
+          <p>12 transformer encoder layers map sentences into a shared cross-lingual latent space where semantically equivalent concepts in French, Hindi, and English share aligned vectors.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">Step 03</span>
+          <h3>Bidirectional LSTM</h3>
+          <p>A 256-dimensional BiLSTM processes sequence hidden states in both forward and backward directions, capturing subtle rhetorical and deceptive flow across long articles.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">Step 04</span>
+          <h3>Masked Mean Pooling</h3>
+          <p>Crucial innovation: standard pooling dilutes embeddings with padding tokens. Our masked mean pooling zeros out padding tokens using the attention mask, maintaining zero-shot transfer.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">Step 05</span>
+          <h3>Calibrated Classification Head</h3>
+          <p>Dropout regularization followed by linear projection to 2 output classes yields well-calibrated probabilities for real and fake news determination.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB: WHATSAPP BOT SIMULATOR ==================== -->
+    <section class="tab-view" id="view-whatsapp">
+      <div class="hero">
+        <p class="eyebrow">Real-World Civic Deployment</p>
+        <h1>WhatsApp Automated Fact-Check Bot</h1>
+        <p class="intro">
+          Over 70% of viral disinformation circulates through peer-to-peer messaging forwards. This interactive simulator demonstrates how citizens can forward suspicious news, audio transcripts, or claims directly to the Signal Check Bot for instant cross-lingual verification.
+        </p>
+      </div>
+
+      <div class="whatsapp-workspace">
+        <div class="wa-simulator-controls-bar">
+          <button class="btn-secondary" id="wa-clear-chat-btn" type="button">🗑️ Clear Chat</button>
+          <button class="btn-secondary" id="wa-export-chat-btn" type="button">📥 Export Transcript</button>
+        </div>
+
+        <!-- Centered Interactive Smartphone Frame -->
+        <div class="phone-frame-wrapper">
+          <div class="phone-frame">
+            <!-- Top Speaker & Camera Notch -->
+            <div class="phone-notch">
+              <span class="phone-speaker"></span>
+              <span class="phone-camera"></span>
+            </div>
+
+            <!-- Mobile Status Bar -->
+            <div class="phone-status-bar">
+              <span class="status-time" id="phone-clock">09:41</span>
+              <div class="status-icons">
+                <span class="status-net">5G</span>
+                <span class="status-wifi">📶</span>
+                <span class="status-battery">🔋 100%</span>
+              </div>
+            </div>
+
+            <!-- WhatsApp Header -->
+            <div class="wa-header">
+              <button class="wa-back-btn" type="button" title="Back">←</button>
+              <div class="wa-profile-area">
+                <div class="wa-avatar">
+                  <span>SC</span>
+                </div>
+                <div class="wa-contact-info">
+                  <div class="wa-name-row">
+                    <span class="wa-name">Signal Check Bot</span>
+                    <span class="wa-verified-badge" title="Official Verified AI Bot">✓</span>
+                  </div>
+                  <span class="wa-online-status" id="wa-bot-status">online • Automated AI Verifier</span>
+                </div>
+              </div>
+              <div class="wa-header-actions">
+                <button class="wa-header-icon-btn" type="button" title="Video Call">📹</button>
+                <button class="wa-header-icon-btn" type="button" title="Phone Call">📞</button>
+                <button class="wa-header-icon-btn" id="wa-menu-btn" type="button" title="More Options">⋮</button>
+              </div>
+            </div>
+
+            <!-- WhatsApp Chat Stream Area -->
+            <div class="wa-chat-body" id="wa-chat-body">
+              <div class="wa-date-pill">TODAY</div>
+              
+              <div class="wa-encryption-pill">
+                🔒 Messages to this chat are protected by simulated 256-bit encryption. Forward any claim, audio text, or news headline for real-time verification.
+              </div>
+
+              <!-- Initial Welcome Message from Bot -->
+              <div class="wa-message wa-msg-bot">
+                <div class="wa-bubble">
+                  <div class="wa-bubble-header">
+                    <span class="wa-bot-label">Signal Check AI Desk</span>
+                  </div>
+                  <p>
+                    👋 <strong>Welcome to Signal Check WhatsApp Verifier!</strong><br><br>
+                    Forward or type any suspicious headline or viral claim in <strong>English, हिन्दी, தமிழ், Français, Español</strong> or 100+ languages.<br><br>
+                    Our <em>XLM-RoBERTa + BiLSTM</em> hybrid engine and live press wire corroborator will verify it instantly.
+                  </p>
+                  <span class="wa-msg-meta">09:41 AM</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Forward Chips -->
+            <div class="wa-quick-forwards">
+              <span class="wa-quick-label">⚡ Test Viral Forwards:</span>
+              <div class="wa-quick-scroll">
+                <button class="wa-quick-chip" type="button" data-forward="ISRO successfully launched the INSAT-3DS meteorological satellite from Sriharikota into orbit.">🚀 ISRO Launch (Real)</button>
+                <button class="wa-quick-chip" type="button" data-forward="Drink turmeric and tulsi boiled water every 2 hours to completely cure cancer and corona in 24 hours, approved by WHO!">🚨 Miracle Health Cure (Fake)</button>
+                <button class="wa-quick-chip" type="button" data-forward="The Supreme Court of India has constituted a special bench to hear digital privacy petitions this week.">🏛️ Supreme Court (Real)</button>
+                <button class="wa-quick-chip" type="button" data-forward="Government is distributing free ₹5,000 cash to all bank account holders. Click link to claim before midnight!">⚠️ Cash Scheme Scam (Fake)</button>
+              </div>
+            </div>
+
+            <!-- WhatsApp Chat Input Bar -->
+            <form class="wa-input-bar" id="wa-input-form">
+              <button class="wa-input-icon-btn" type="button" title="Emoji">😊</button>
+              <input type="text" id="wa-input-text" class="wa-input-field" placeholder="Forward or type a news claim..." autocomplete="off">
+              <button class="wa-input-icon-btn" type="button" title="Attach">📎</button>
+              <button class="wa-send-btn" id="wa-send-btn" type="submit" title="Send Message">
+                <span>➤</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 7: ABOUT & RESEARCH ==================== -->
+    <section class="tab-view" id="view-about">
+      <div class="hero">
+        <p class="eyebrow">Project Background</p>
+        <h1>About & Research Foundation</h1>
+        <p class="intro">This system is built upon state-of-the-art academic datasets and research in cross-lingual natural language processing.</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dash-panel">
+          <h3>The PolyglotFakeFacts Dataset</h3>
+          <p style="font-size: 14px; line-height: 1.6; color: var(--muted);">
+            Published in February 2026, PolyglotFakeFacts comprises 10,206 full-length verified articles across 18 languages:
+            Arabic, Armenian, Azerbaijani, Bulgarian, Czech, English, Finnish, French, Georgian, German, Hungarian, Italian, Lithuanian, Romanian, Russian, Slovak, Spanish, and Swedish.
+          </p>
+          <p style="font-size: 14px; line-height: 1.6; color: var(--muted);">
+            Disinformation items are collected from the European Union's <em>EUvsDisinfo</em> monitoring desk, while authentic counterparts originate from trusted national publications.
+          </p>
+        </div>
+
+        <div class="dash-panel">
+          <h3>Research & Citations</h3>
+          <div style="background: var(--paper); padding: 14px; border: 1px solid var(--line); font: 11px 'DM Mono', monospace; border-radius: 4px; overflow-x: auto;">
+            @article{conneau2020unsupervised,<br>
+            &nbsp;&nbsp;title={Unsupervised Cross-lingual Representation Learning at Scale},<br>
+            &nbsp;&nbsp;author={Conneau, Alexis and Khandelwal, Kartikay and Goyal, Naman and others},<br>
+            &nbsp;&nbsp;journal={ACL},<br>
+            &nbsp;&nbsp;year={2020}<br>
+            }<br><br>
+            @data{polyglotfakefacts2026,<br>
+            &nbsp;&nbsp;title={PolyglotFakeFacts: Multilingual Fake News Dataset v2.0},<br>
+            &nbsp;&nbsp;publisher={Mendeley Data},<br>
+            &nbsp;&nbsp;year={2026}<br>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 8: LOGIN & ACCOUNT ==================== -->
+    <section class="tab-view" id="view-login">
+      <div class="auth-wrapper">
+        <!-- Logged Out Auth Card -->
+        <div class="auth-card" id="auth-form-card">
+          <div class="auth-header">
+            <div class="auth-logo-badge">SC</div>
+            <h2 id="auth-title">Analyst Portal Sign In</h2>
+            <p id="auth-subtitle">Sign in to access your analyst workspace.</p>
+          </div>
+
+          <!-- Segmented Tab Switch: Login vs Register -->
+          <div class="auth-switcher">
+            <button class="auth-switch-btn active" id="switch-to-login" type="button">Sign In</button>
+            <button class="auth-switch-btn" id="switch-to-register" type="button">Create Account</button>
+          </div>
+
+          <div class="auth-status-banner" id="auth-status-msg" hidden></div>
+
+          <!-- Sign In Form -->
+          <form class="auth-form" id="login-form">
+            <div class="form-group">
+              <label for="login-email">Email or Analyst ID</label>
+              <div class="input-with-icon">
+                <span class="field-icon">✉️</span>
+                <input type="text" id="login-email" placeholder="analyst@signalcheck.org" autocomplete="username" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <div class="input-with-icon">
+                <span class="field-icon">🔒</span>
+                <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" required>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="remember-label">
+                <input type="checkbox" id="login-remember" checked>
+                <span>Remember session</span>
+              </label>
+              <a href="#" class="forgot-link" id="forgot-password-link">Forgot password?</a>
+            </div>
+
+            <button class="btn-auth-submit" id="login-submit-btn" type="submit">
+              Sign In to Workspace <span>-&gt;</span>
+            </button>
+          </form>
+
+          <!-- Register Form -->
+          <form class="auth-form" id="register-form" style="display: none;">
+            <div class="form-group">
+              <label for="reg-name">Full Name</label>
+              <div class="input-with-icon">
+                <span class="field-icon">👤</span>
+                <input type="text" id="reg-name" placeholder="Dr. Alex Reed" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-org">Organization / Newsroom</label>
+              <div class="input-with-icon">
+                <span class="field-icon">🏛️</span>
+                <input type="text" id="reg-org" placeholder="Associated Press / Reuters / University" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-role">Role / Clearance</label>
+              <select id="reg-role" class="form-select">
+                <option value="Senior OSINT Analyst">Senior OSINT Analyst</option>
+                <option value="Lead Fact-Checker">Lead Fact-Checker</option>
+                <option value="Investigative Journalist">Investigative Journalist</option>
+                <option value="Academic Researcher">Academic Researcher</option>
+                <option value="Public Verifier">Public Verifier</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-email">Work Email</label>
+              <div class="input-with-icon">
+                <span class="field-icon">✉️</span>
+                <input type="email" id="reg-email" placeholder="name@organization.org" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-password">Password</label>
+              <div class="input-with-icon">
+                <span class="field-icon">🔒</span>
+                <input type="password" id="reg-password" placeholder="At least 4 characters" required minlength="4">
+              </div>
+            </div>
+
+            <button class="btn-auth-submit" id="register-submit-btn" type="submit">
+              Create Analyst Account <span>-&gt;</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Logged In Profile Dashboard Card -->
+        <div class="auth-profile-card" id="auth-profile-card" style="display: none;">
+          <div class="profile-header">
+            <div class="profile-avatar-large" id="profile-card-avatar">AR</div>
+            <div class="profile-title-area">
+              <div class="profile-badge-row">
+                <span class="tier-pill" id="profile-card-tier">Clearance: Tier 2</span>
+                <span class="online-pill">🟢 Active Session</span>
+              </div>
+              <h2 id="profile-card-name">Dr. Alex Reed</h2>
+              <p class="profile-sub" id="profile-card-role-org">Senior OSINT Analyst &bull; Global Disinformation Observatory</p>
+            </div>
+          </div>
+
+          <div class="profile-stats-grid">
+            <div class="profile-stat-box">
+              <span class="p-stat-title">Claims Analyzed</span>
+              <strong class="p-stat-val" id="profile-checks-count">142</strong>
+              <small class="p-stat-sub">Audit trail synchronized</small>
+            </div>
+            <div class="profile-stat-box">
+              <span class="p-stat-title">License Tier</span>
+              <strong class="p-stat-val" style="color:var(--green)">Unlimited</strong>
+              <small class="p-stat-sub">Research & Fact-Checking</small>
+            </div>
+            <div class="profile-stat-box">
+              <span class="p-stat-title">Cross-Lingual Models</span>
+              <strong class="p-stat-val" style="color:var(--blue)">100+</strong>
+              <small class="p-stat-sub">XLM-RoBERTa + BiLSTM</small>
+            </div>
+          </div>
+
+          <div class="profile-details-list">
+            <div class="profile-detail-row">
+              <span class="detail-label">Email:</span>
+              <strong id="profile-card-email">analyst@signalcheck.org</strong>
+            </div>
+            <div class="profile-detail-row">
+              <span class="detail-label">Session ID:</span>
+              <span class="detail-mono" id="profile-card-session">sess-9f8a2c114</span>
+            </div>
+            <div class="profile-detail-row">
+              <span class="detail-label">Live Web Scraper:</span>
+              <span class="detail-badge">Enabled (Google News RSS & Wire Desks)</span>
+            </div>
+          </div>
+
+          <div class="profile-actions-bar">
+            <button class="btn-secondary" id="profile-go-detect-btn" type="button">
+              🔍 Return to News Detector
+            </button>
+            <button class="btn-signout-main" id="profile-logout-btn" type="button">
+              🚪 Sign Out of Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <span>Signal Check &bull; Cross-Lingual Disinformation Desk</span>
+      <span>XLM-RoBERTa + BiLSTM Hybrid Model</span>
+      <span>Local Research Environment</span>
+    </footer>
+  </main>
+
+  <script src="./app.js?v=15"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+-- SPANISH --
+[Real] La Organización Mundial de la Salud declaró el brote de COVID-19 como una pandemia global el 11 de marzo de 2020.
+[Fake] Científicos confirman que beber agua con limón y bicarbonato cura el cáncer en menos de 48 horas.
+
+-- HINDI --
+[Real] भारतीय रिज़र्व बैंक (RBI) ने हाल ही में नई मौद्रिक नीति की घोषणा की है, जिससे ब्याज दरों में बदलाव हो सकता है।
+[Fake] ब्रेकिंग: सरकार ने घोषणा की है कि कल से 2000 रुपये के सभी नोट अवैध हो जाएंगे और एटीएम से केवल 100 रुपये के नोट निकलेंगे।
+
+-- FRENCH --
+[Real] Le président de la République a annoncé de nouvelles mesures pour lutter contre le changement climatique lors du sommet de Paris.
+[Fake] La Tour Eiffel sera démolie le mois prochain pour faire place à un nouveau centre commercial géant.
+
+-- ARABIC --
+[Real] أعلنت وكالة الفضاء الأمريكية (ناسا) عن اكتشاف كوكب جديد يشبه الأرض في مجرة قريبة.
+[Fake] عاجل: شرب الماء الساخن مع الثوم يمنع الإصابة بفيروس كورونا تماماً، وفقاً لتقرير سري مسرب من وزارة الصحة.

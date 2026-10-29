@@ -1,0 +1,17 @@
+{
+  "accuracy": 0.9090909090909091,
+  "f1_macro": 0.9090909090909091,
+  "precision_macro": 0.9166666666666667,
+  "recall_macro": 0.9166666666666667,
+  "n_train": 41,
+  "n_test": 11,
+  "languages": [
+    "ar",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "hi",
+    "pt"
+  ]
+}
